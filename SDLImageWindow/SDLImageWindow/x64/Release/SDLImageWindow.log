@@ -1,1 +1,45 @@
-﻿  SDLImageWindow.vcxproj -> C:\Users\Administrador\Desktop\GraficosSDL2-master\SDLImageWindow\x64\Release\SDLImageWindow.exe
+﻿  Pantalla.cpp
+  Generando código
+LINK : fatal error C1001: Error interno en el compilador.
+  Archivo del compilador 'f:\dd\vctools\compiler\utc\src\p2\main.c', línea 258
+   Para solucionar este problema, intente simplificar o cambiar el programa en aquellas líneas próximas a las ubicaciones que se enumeran a continuación.
+  Elija el comando Soporte técnico en el menú Ayuda de Visual C++ 
+   o abra el archivo de ayuda de soporte técnico para obtener más información
+    link!InvokeCompilerPass()+0x1f204
+    link!InvokeCompilerPass()+0x1f204
+    link!InvokeCompilerPass()+0x1ec1e
+    link!DllGetC2Telemetry()+0xd853a
+  
+LINK : fatal error C1001: Error interno en el compilador.
+  Archivo del compilador 'f:\dd\vctools\compiler\utc\src\p2\main.c', línea 258
+   Para solucionar este problema, intente simplificar o cambiar el programa en aquellas líneas próximas a las ubicaciones que se enumeran a continuación.
+  Elija el comando Soporte técnico en el menú Ayuda de Visual C++ 
+   o abra el archivo de ayuda de soporte técnico para obtener más información
+    link!InvokeCompilerPass()+0x1f204
+    link!InvokeCompilerPass()+0x1ec1e
+    link!DllGetC2Telemetry()+0xd853a
+  
+  
+LINK : fatal error LNK1000: Internal error during IMAGE::BuildImage
+  
+    Version 14.12.25835.0
+  
+    ExceptionCode            = C0000005
+    ExceptionFlags           = 00000000
+    ExceptionAddress         = 527EC072 (523B0000) "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.12.25827\bin\HostX86\x64\c2.dll"
+    NumberParameters         = 00000002
+    ExceptionInformation[ 0] = 00000000
+    ExceptionInformation[ 1] = 0AAA08EC
+  
+  CONTEXT:
+    Eax    = 0AAA08EC  Esp    = 001FEA58
+    Ebx    = 00A900C3  Ebp    = 001FEA88
+    Ecx    = 00000005  Esi    = 0AAA08EC
+    Edx    = 07C6A02C  Edi    = 001FEA68
+    Eip    = 527EC072  EFlags = 00010202
+    SegCs  = 00000023  SegDs  = 0000002B
+    SegSs  = 0000002B  SegEs  = 0000002B
+    SegFs  = 00000053  SegGs  = 0000002B
+    Dr0    = 00000000  Dr3    = 00000000
+    Dr1    = 00000000  Dr6    = 00000000
+    Dr2    = 00000000  Dr7    = 00000000

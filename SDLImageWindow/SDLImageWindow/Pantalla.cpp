@@ -27,10 +27,10 @@ SDL_Renderer* renderer = NULL;
 
 
 int main(int argc, char* argv[]) {
-	
+	SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);
 	SDL_Rect offset;
-	offset.x = 600;
-	offset.y = 400;
+	offset.x = 10;
+	offset.y = 10;
 
 
 	SDL_Window *window;                    // Declare a pointer
@@ -107,6 +107,8 @@ int main(int argc, char* argv[]) {
 	{
 		SDL_Delay(10);
 		SDL_PollEvent(&event);
+		offset.h = 100;//agregado
+		offset.w = 100;
 
 		switch (event.type)
 		{
@@ -151,20 +153,23 @@ int main(int argc, char* argv[]) {
 		case SDL_KEYDOWN:
 				switch (event.key.keysym.sym) {
 				case SDLK_RIGHT:
-					offset.x++;
-					cout << "se moveria para la derecha"<<endl;
+					offset.x = offset.x +1;
+					cout << "se moveria para la derecha y offset: "<<offset.x <<endl;
+					
 					break;
 				case SDLK_LEFT:
+					offset.x = offset.x - 1;
 					cout << "se moveria para la isquierda" << endl;
 			
 					break;
 				case SDLK_UP:
+					offset.y = offset.y -1;
 					cout << "se moveria hacia arriba" << endl;
 				
 					break;
 				case SDLK_DOWN:
+					offset.y = offset.y+ 1;
 					cout << "se moveria hacia abajo" << endl;
-					
 					break;
 
 
@@ -177,25 +182,27 @@ int main(int argc, char* argv[]) {
 		// clear window
 
 
-
+		
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
 		
 		
+		SDL_RenderClear(renderer);
 		
 		
-		SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);
 		
-		SDL_RenderCopy(renderer, texture, NULL, NULL);
-	
+		SDL_RenderCopy(renderer, texture, NULL, &offset);
 	
 
+		SDL_RenderPresent(renderer);
+		//SDL_FreeSurface(image);
+		
 		for (std::list<Line>::const_iterator i = lines.begin(); i != lines.end(); ++i)
 		{
 			Line line = *i;
 			SDL_RenderDrawLine(renderer, line.x1, line.y1, line.x2, line.y2);
 		}
-
+		
 		SDL_RenderPresent(renderer);
 		SDL_DestroyTexture(texture);
 	}
