@@ -1,30 +1,62 @@
 #include "SDL.h"
 #include "SDL_keyboard.h"
-//#include <SDL_image.h>
+#include <SDL_image.h>
 #include <stdio.h>
 #include <string>
-
+#include <SDL_rect.h>
 #include <list>
+#include <iostream>
+
+#ifdef DEBUG
+#include <vld.h>
+#include <vld_def.h>
+#endif //debug
+
 using namespace std;
 
-enum KeyPressSurfaces
-{
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
-};
+
+
+SDL_Surface* image = IMG_Load("maxresdefault.png");
+//SDL_Surface* image2 = IMG_Load("resize.png");
+
+
+
+
+SDL_Renderer* renderer = NULL;
+
+
 
 int main(int argc, char* argv[]) {
 	
+	SDL_Rect offset;
+	offset.x = 600;
+	offset.y = 400;
+
+
 	SDL_Window *window;                    // Declare a pointer
+	
+	
+	
 	bool quit = false;
 	SDL_Event event;
-	SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
-	SDL_Surface* image = NULL;
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {              // Initialize SDL2
+		cout<<"Failed to initialize SDL"<< endl;
+		return false;
+	}
+
+
+	if(IMG_Init(IMG_INIT_PNG)!=IMG_INIT_PNG){
+		cout << "Failed to initialize sdl_image" << endl;
+		return false;
+	}
+
+
 	SDL_Surface* screen = NULL;
+
+//	image = LoadTexture(renderer,"maxresdefault.png");
+	
+
+//	SDL_Event ev;
 	struct Line
 	{
 		int x1 = 0;
@@ -36,7 +68,7 @@ int main(int argc, char* argv[]) {
 	std::list<Line> lines;
 	
 	Line linea;
-
+	
 
 
 	bool drawing = false;
@@ -45,6 +77,9 @@ int main(int argc, char* argv[]) {
 
 	//Set up screen
 	//screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);
+
+	
+
 
 
 										   // Create an application window with the following settings:
@@ -58,6 +93,9 @@ int main(int argc, char* argv[]) {
 	);
 
 	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
+	screen = SDL_GetWindowSurface(window);
+	
+
 
 	// Check that the window was successfully created
 	if (window == NULL) {
@@ -76,6 +114,9 @@ int main(int argc, char* argv[]) {
 			quit = true;
 			break;
 			// TODO input handling code goes here
+	
+		
+		
 		case SDL_MOUSEBUTTONDOWN:
 			switch (event.button.button)
 			{
@@ -107,78 +148,61 @@ int main(int argc, char* argv[]) {
 			}
 			break;
 
-		/*case SDL_KeyboardEvent:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_UP:
-				gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP];
-				break;
+		case SDL_KEYDOWN:
+				switch (event.key.keysym.sym) {
+				case SDLK_RIGHT:
+					offset.x++;
+					cout << "se moveria para la derecha"<<endl;
+					break;
+				case SDLK_LEFT:
+					cout << "se moveria para la isquierda" << endl;
+			
+					break;
+				case SDLK_UP:
+					cout << "se moveria hacia arriba" << endl;
+				
+					break;
+				case SDLK_DOWN:
+					cout << "se moveria hacia abajo" << endl;
+					
+					break;
 
-			case SDLK_DOWN:
-				gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN];
-				break;
 
-			case SDLK_LEFT:
-				gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT];
-				break;
 
-			case SDLK_RIGHT:
-				gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT];
-				break;
-
-			default:
-				gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
-				break;
-			}*/
+				}
+			
+			
 		}
 
 		// clear window
 
+
+
+
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
 		
-
-
-
-
-
-		/*
-
-		SDL_SetRenderDrawColor(renderer, 242, 242, 242, 255);
-		SDL_RenderClear(renderer);
-		*/
-		// TODO rendering code goes here
-
-		// render window
+		
+		
+		
 		SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);
-		/*
-		SDL_BlitSurface(image, NULL, screen, NULL);
+		
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
+	
+	
 
-		//Update Screen
-		SDL_Flip(screen);
-
-		//Pause
-		SDL_Delay(2000);
-
-
-		image = SDL_LoadBMP("maxresdefault.jpg");*/
 		for (std::list<Line>::const_iterator i = lines.begin(); i != lines.end(); ++i)
 		{
 			Line line = *i;
 			SDL_RenderDrawLine(renderer, line.x1, line.y1, line.x2, line.y2);
 		}
-		
+
 		SDL_RenderPresent(renderer);
+		SDL_DestroyTexture(texture);
 	}
-	// The window is open: could enter program loop here (see SDL_PollEvent())
-
-	//SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
-
-					  // Close and destroy the window
 	
 
 
 
-
-	SDL_FreeSurface(image);
 
 	SDL_DestroyRenderer(renderer);
 	

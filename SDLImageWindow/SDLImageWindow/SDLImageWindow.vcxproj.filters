@@ -26,5 +26,11 @@
     <ClInclude Include="..\SDL2-2.0.8\include\SDL_keyboard.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\SDL2-2.0.8\lib\x86\SDL_image.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SDL2-2.0.8\include\SDL_rect.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
